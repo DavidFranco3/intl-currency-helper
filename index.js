@@ -1,25 +1,46 @@
-import { validateNumber, normalizeOptions } from './utils.js';
+import { validateNumber, normalizeOptions, updateGlobalConfig } from './utils.js';
+
+/**
+ * Updates the global configuration for all formatting calls.
+ * @param {object} options - Options to set as default.
+ */
+export const configure = (options) => {
+  updateGlobalConfig(options);
+};
 
 /**
  * Formats a number into a currency string using Intl.NumberFormat.
  * 
  * @param {number|string} amount - The numeric value to format.
  * @param {object} [options] - Optional configuration.
- * @param {string} [options.locale='es-MX'] - The BCP 47 language tag (e.g., 'es-MX', 'en-US').
- * @param {string} [options.currency='MXN'] - The ISO 4217 currency code (e.g., 'MXN', 'USD', 'EUR').
- * @param {number} [options.minimumFractionDigits=2] - Minimum number of decimal places.
- * @param {number} [options.maximumFractionDigits=2] - Maximum number of decimal places.
- * @param {boolean} [options.useGrouping=true] - Whether to use thousand separators.
  * @returns {string} The formatted currency string.
- * @example
- * formatCurrency(1234.56) // "$1,234.56" (default MXN)
- * formatCurrency(1234.56, { currency: 'USD', locale: 'en-US' }) // "$1,234.56"
  */
 export const formatCurrency = (amount, options = {}) => {
   const number = validateNumber(amount);
   const config = normalizeOptions(options);
 
   return new Intl.NumberFormat(config.locale, config).format(number);
+};
+
+/**
+ * Shorthand for Mexican Peso (MXN)
+ */
+export const formatMXN = (amount, options = {}) => {
+  return formatCurrency(amount, { currency: 'MXN', locale: 'es-MX', ...options });
+};
+
+/**
+ * Shorthand for US Dollar (USD)
+ */
+export const formatUSD = (amount, options = {}) => {
+  return formatCurrency(amount, { currency: 'USD', locale: 'en-US', ...options });
+};
+
+/**
+ * Shorthand for Euro (EUR)
+ */
+export const formatEUR = (amount, options = {}) => {
+  return formatCurrency(amount, { currency: 'EUR', locale: 'es-ES', ...options });
 };
 
 /**

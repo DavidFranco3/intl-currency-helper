@@ -12,20 +12,28 @@ export const validateNumber = (value) => {
   return number;
 };
 
+let globalConfig = {
+  locale: 'es-MX',
+  currency: 'MXN',
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2,
+  style: 'currency',
+  useGrouping: true,
+};
+
 /**
- * Normalizes options for Intl.NumberFormat.
+ * Updates the global configuration for all calls.
+ * @param {object} options - New default options.
+ */
+export const updateGlobalConfig = (options) => {
+  globalConfig = { ...globalConfig, ...options };
+};
+
+/**
+ * Normalizes options for Intl.NumberFormat using global configuration.
  * @param {object} options - User-provided options.
  * @returns {object} Normalized options.
  */
 export const normalizeOptions = (options = {}) => {
-  const defaults = {
-    locale: 'es-MX',
-    currency: 'MXN',
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-    style: 'currency',
-    useGrouping: true,
-  };
-
-  return { ...defaults, ...options };
+  return { ...globalConfig, ...options };
 };

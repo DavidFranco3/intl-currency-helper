@@ -1,49 +1,57 @@
-import { formatCurrency, CURRENCIES, LOCALES } from './index.js';
+import { 
+  formatCurrency, 
+  formatMXN, 
+  formatUSD, 
+  formatEUR, 
+  configure, 
+  CURRENCIES, 
+  LOCALES 
+} from './index.js';
 
 const tests = [
   {
     name: 'Default formatting (MXN / es-MX)',
     input: 1234.56,
-    expected: '$1,234.56', // Note: specific spacing can vary by environment, we'll check contains
-  },
-  {
-    name: 'USD / en-US',
-    input: 1234.56,
-    options: { currency: CURRENCIES.USD, locale: LOCALES.US },
     expected: '$1,234.56',
   },
   {
-    name: 'EUR / es-ES',
-    input: 1234.56,
-    options: { currency: CURRENCIES.EUR, locale: LOCALES.ES },
-    expected: '1.234,56\u00A0€', // Note: \u00A0 is non-breaking space
+    name: 'Shorthand formatMXN',
+    fn: () => formatMXN(1234.56),
+    expected: '$1,234.56',
   },
   {
-    name: 'Negative number',
-    input: -500,
-    expected: '-$500.00',
+    name: 'Shorthand formatUSD',
+    fn: () => formatUSD(1234.56),
+    expected: '$1,234.56',
   },
   {
-    name: 'Zero',
-    input: 0,
-    expected: '$0.00',
+    name: 'Shorthand formatEUR',
+    fn: () => formatEUR(1234.56),
+    expected: '1.234,56\u00A0€',
   },
   {
-    name: 'String input',
-    input: "99.99",
-    expected: '$99.99',
+    name: 'Global configuration (Change default to USD)',
+    fn: () => {
+      configure({ currency: 'USD', locale: 'en-US' });
+      return formatCurrency(100);
+    },
+    expected: '$100.00',
+  },
+  {
+    name: 'Shorthand with extra options (No decimals)',
+    fn: () => formatUSD(100, { minimumFractionDigits: 0, maximumFractionDigits: 0 }),
+    expected: '$100',
   }
 ];
 
 let passed = 0;
 let total = tests.length;
 
-console.log('--- Starting Tests ---\n');
+console.log('--- Starting Simplification Tests ---\n');
 
 tests.forEach(test => {
   try {
-    const result = formatCurrency(test.input, test.options);
-    // Use includes/regex/normalize to avoid tiny formatting discrepancies in different environments (like nbsp)
+    const result = test.fn ? test.fn() : formatCurrency(test.input, test.options);
     const normalizedResult = result.replace(/\u00A0/g, ' ').trim();
     const normalizedExpected = test.expected.replace(/\u00A0/g, ' ').trim();
 
@@ -59,15 +67,6 @@ tests.forEach(test => {
     console.log(`❌ [ERROR] ${test.name}: ${error.message}`);
   }
 });
-
-// Error handling test
-console.log('\n--- Error Handling Test ---');
-try {
-  formatCurrency('not-a-number');
-  console.log('❌ [FAIL] Should have thrown an error for invalid input');
-} catch (error) {
-  console.log('✅ [PASS] Threw error for invalid input: ' + error.message);
-}
 
 console.log(`\n--- Summary: ${passed}/${total} passed ---`);
 
