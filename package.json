@@ -1,0 +1,20 @@
+{
+  "name": "intl-currency-helper",
+  "version": "1.0.0",
+  "description": "A lightweight library for formatting numbers to currency using Intl.NumberFormat, optimized for both Node.js and React.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "keywords": [
+    "currency",
+    "format",
+    "intl",
+    "money",
+    "react",
+    "nodejs"
+  ],
+  "author": "Antigravity",
+  "license": "MIT"
+}
