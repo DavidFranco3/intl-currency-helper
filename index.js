@@ -19,7 +19,13 @@ export const formatCurrency = (amount, options = {}) => {
   const number = validateNumber(amount);
   const config = normalizeOptions(options);
 
-  return new Intl.NumberFormat(config.locale, config).format(number);
+  let formatted = new Intl.NumberFormat(config.locale, config).format(number);
+
+  if (config.code && config.currency) {
+    formatted = `${formatted} ${config.currency}`;
+  }
+
+  return formatted;
 };
 
 /**

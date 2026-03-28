@@ -41,6 +41,16 @@ const tests = [
     name: 'Shorthand with extra options (No decimals)',
     fn: () => formatUSD(100, { minimumFractionDigits: 0, maximumFractionDigits: 0 }),
     expected: '$100',
+  },
+  {
+    name: 'Show currency code (with curly braces)',
+    fn: () => formatMXN(100, { code: true }),
+    expected: '$100.00 MXN',
+  },
+  {
+    name: 'Explicitly hide code (with curly braces)',
+    fn: () => formatUSD(100, { code: false }),
+    expected: '$100.00',
   }
 ];
 

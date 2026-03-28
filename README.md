@@ -32,6 +32,10 @@ formatEUR(1234.56); // "1.234,56 €" (es-ES)
 
 // You can still pass extra options if needed:
 formatUSD(100, { minimumFractionDigits: 0 }); // "$100"
+
+// Show the currency code at the end using an object:
+formatMXN(1234.56, { code: true }); // "$1,234.56 MXN"
+formatUSD(1234.56, { code: true }); // "$1,234.56 USD"
 ```
 
 ### ⚙️ Global Configuration
@@ -77,6 +81,7 @@ formatCurrency(1234.56, {
 #### Options
 - `locale` (String): BCP 47 language tag.
 - `currency` (String): ISO 4217 currency code.
+- `code` (Boolean): If `true`, appends the ISO currency code at the end (e.g., "$100.00 MXN").
 - `minimumFractionDigits` (Number): Default `2`.
 - `maximumFractionDigits` (Number): Default `2`.
 - `useGrouping` (Boolean): Default `true`.
