@@ -1,9 +1,17 @@
 {
   "name": "intl-currency-helper",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A lightweight library for formatting numbers to currency using Intl.NumberFormat, optimized for both Node.js and React.",
   "main": "index.js",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DavidFranco3/intl-currency-helper.git"
+  },
+  "bugs": {
+    "url": "https://github.com/DavidFranco3/intl-currency-helper/issues"
+  },
+  "homepage": "https://github.com/DavidFranco3/intl-currency-helper#readme",
   "scripts": {
     "test": "node test.js"
   },
@@ -15,6 +23,6 @@
     "react",
     "nodejs"
   ],
-  "author": "Antigravity",
+  "author": "David Franco",
   "license": "MIT"
 }
