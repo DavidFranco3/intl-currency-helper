@@ -1,10 +1,26 @@
 {
   "name": "intl-currency-helper",
-  "version": "1.0.3",
-  "description": "A lightweight library for formatting numbers to currency using Intl.NumberFormat, optimized for both Node.js and React.",
-  "main": "index.js",
-  "types": "index.d.ts",
+  "version": "2.0.0",
+  "description": "A lightweight, high-powered library for formatting numbers to currency using Intl.NumberFormat, optimized for both Node.js and React.",
   "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./react": {
+      "types": "./dist/react.d.ts",
+      "import": "./dist/react.js",
+      "require": "./dist/react.cjs"
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/DavidFranco3/intl-currency-helper.git"
@@ -14,7 +30,10 @@
   },
   "homepage": "https://github.com/DavidFranco3/intl-currency-helper#readme",
   "scripts": {
-    "test": "node test.js"
+    "build": "tsup",
+    "test": "npm run build && node test.js",
+    "prepublishOnly": "npm run build",
+    "dev": "tsup --watch"
   },
   "keywords": [
     "currency",
@@ -22,8 +41,22 @@
     "intl",
     "money",
     "react",
-    "nodejs"
+    "nodejs",
+    "typescript"
   ],
   "author": "David Franco",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@types/react": "^19.2.15",
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3"
+  },
+  "peerDependencies": {
+    "react": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    }
+  }
 }
